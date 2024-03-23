@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
 
-function NavBar() {
+function NavBar({children}) {
   return (
     <div className="navbar-style">
       <h1 className="logo">LOGO :)</h1>
-      <input type="text" placeholder="search..." />
-      <a className='link' href="#">Found X Results</a>
+      {children}
+      <a className="link" href="#">
+        Found X Results
+      </a>
       <div className="haert-icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +28,17 @@ function NavBar() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default NavBar
+export default NavBar;
+export function Search({ type, text, onSearch, value }) {
+  console.log(value);
+  return (
+    <input 
+    onChange={onSearch}
+    value={value}
+    type={type}
+     placeholder={text} />
+  )
+}
