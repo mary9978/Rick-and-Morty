@@ -1,19 +1,20 @@
 import React from "react";
 import { EyeIcon } from "@heroicons/react/24/outline";
-function CharacterList({character}) {
+import axios from "axios";
+function CharacterList({character,fetchHandler}) {
   return (
     <div className="character-list">
-    {character.map(item =><Character key={item.id} item={item} />)}
+    {character.map(item =><Character fetchHandler={fetchHandler} key={item.id} item={item} />)}
     </div>
    
   );
 }
 
 export default CharacterList;
-function Character({item}) {
+function Character({item,fetchHandler}) {
+ 
   return (
-    
-       <div className="character-card">
+       <div className="character-card" >
          <div style={{'display':'flex'}}>
            <img
              width={"50px"}
@@ -26,7 +27,7 @@ function Character({item}) {
              <p>{item.status} - {item.species}</p>
            </div>
          </div>
-         <EyeIcon color="red" width={"25px"} />
+         <EyeIcon color="red" width={"25px"} onClick={()=> fetchHandler(item.id)} />
        </div>
 
   )

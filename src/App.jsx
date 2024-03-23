@@ -8,7 +8,8 @@ import toast, { Toaster } from "react-hot-toast";
 function App() {
   const [character, setCharacter] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
-  const [query,setQuery] = useState("");
+  const [selectedId , setSelectedId] = useState(null);
+  const [query, setQuery] = useState("");
   useEffect(() => {
     setIsFetching(true);
     console.log(`https://rickandmortyapi.com/api/character?name=${query}`);
@@ -16,30 +17,39 @@ function App() {
       .get(`https://rickandmortyapi.com/api/character?name=${query}`)
       .then(({ data }) => setCharacter(data.results))
       .catch((err) => {
-        if(query){
+        if (query) {
           setCharacter([]);
-          toast.error('character not found');
+          toast.error("character not found");
           return;
-        }
-        else{
+        } else {
           toast.error(err.message);
         }
-        
       })
       .finally(() => setIsFetching(false));
   }, [query]);
+
+  const selectedCharacter = (id)=>{
+    setSelectedId(id);
+  }
   return (
     <>
       <Toaster />
       <NavBar>
-        <Search value={query} onSearch={(e)=>setQuery(e.target.value)} type={'text'} text={'search ...'}/>
+        <Search
+          value={query}
+          onSearch={(e) => setQuery(e.target.value)}
+          type={"text"}
+          text={"search ..."}
+        />
       </NavBar>
       <Main>
         {isFetching ? (
           <h3 style={{ color: "white" }}>data is fetching ...</h3>
         ) : (
-          <CharacterList character={character} />
+          <CharacterList fetchHandler={selectedCharacter} character={character} />
         )}
+        <CharacterDetail selectedId={selectedId} />
+        
       </Main>
     </>
   );
@@ -50,7 +60,7 @@ function Main({ children }) {
   return (
     <div className="main">
       {children}
-      <CharacterDetail />
+      
     </div>
   );
 }
