@@ -1,0 +1,93 @@
+:root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    --slate-900: #0f172a;
+    --slate-800: #1e293b;
+    --slate-700: #334155;
+    --slate-600: #475569;
+    --slate-500: rgb(100, 116, 139);
+    --slate-400: #94a3b8;
+    --slate-300: #cbd5e1;
+    --slate-200: #e2e8f0;
+    --slate-100: #f1f5f9;
+    --slate-50: #f8fafc;
+    --rose-600: #e11d48;
+    --rose-500: #f43f5e;
+    --green-600: #22c55e;
+}
+*{
+    border: none;
+    list-style: none;
+    text-decoration: none;
+}
+body{
+    min-height: 100vh;
+    background-color: var(--slate-900);
+}
+.navbar-style{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 20px;
+    height: 80px;
+    margin: 1rem 2rem;
+    background-color: var(--slate-700);
+}
+.link{
+    color: var(--slate-500);
+}
+.logo{
+    background: transparent;
+    color: white;
+    font-size: 24px;
+    padding-left: 20px;
+}
+input{
+    color: white;
+    background: var(--slate-600);
+    padding: 0.5rem;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+}
+.haert-icon svg{
+    width: 100px;
+    height: 28px;
+    color: var(--rose-600);
+    padding-right: 20px;
+}
+.haert-icon{
+    position: relative;
+}
+.badge-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 20px;
+    bottom: 15px;
+    background-color: var(--rose-500);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+.badge-div span{
+    color: whitesmoke;
+    padding: 20px;
+}
+.main{
+    display: flex;
+    justify-content: space-between;
+}
+.character-card{
+    padding: 0.5rem !important;
+    gap: 40px;
+    margin: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--slate-800);
+    border-radius: 10px;
+}
+.character-info p {
+    margin: 0 0.5rem;
+}
