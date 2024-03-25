@@ -29,8 +29,16 @@ function CharacterDetail({selectedId}) {
         <p>{selectedCharacter.status} - {selectedCharacter.species}</p>
       </div>
     </div>
+    <EpisodeList episodes={selectedCharacter.episode}/>
   </div>
   )
 }
 
 export default CharacterDetail
+
+function EpisodeList({episodes}) {
+  
+  return(
+    <div className='text-white'>Episodes List</div>
+  )
+}

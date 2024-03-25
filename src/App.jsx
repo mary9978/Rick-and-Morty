@@ -8,14 +8,18 @@ import toast, { Toaster } from "react-hot-toast";
 function App() {
   const [character, setCharacter] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
-  const [selectedId , setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
   const [query, setQuery] = useState("");
   useEffect(() => {
     setIsFetching(true);
-    console.log(`https://rickandmortyapi.com/api/character?name=${query}`);
     axios
       .get(`https://rickandmortyapi.com/api/character?name=${query}`)
-      .then(({ data }) => setCharacter(data.results))
+      .then(({ data }) => {
+        if(!query) setCharacter([]);
+        else{
+          setCharacter(data.results);
+        }
+      })
       .catch((err) => {
         if (query) {
           setCharacter([]);
@@ -28,13 +32,13 @@ function App() {
       .finally(() => setIsFetching(false));
   }, [query]);
 
-  const selectedCharacter = (id)=>{
-    setSelectedId(id);
-  }
+  const selectedCharacter = (id) => {
+    setSelectedId((prevId) => prevId === id ? null : id);
+  };
   return (
     <>
       <Toaster />
-      <NavBar>
+      <NavBar searchRes={character.length}>
         <Search
           value={query}
           onSearch={(e) => setQuery(e.target.value)}
@@ -43,13 +47,16 @@ function App() {
         />
       </NavBar>
       <Main>
-        {isFetching ? (
-          <h3 style={{ color: "white" }}>data is fetching ...</h3>
+        { !query.length ? (
+          <h3 style={{ color: "white" }}>search character list</h3>
         ) : (
-          <CharacterList fetchHandler={selectedCharacter} character={character} />
+          <CharacterList
+            selectedCharacterId = {selectedId}
+            fetchHandler={selectedCharacter}
+            character={character}
+          />
         )}
-        <CharacterDetail selectedId={selectedId} />
-        
+       {selectedId &&  <CharacterDetail selectedId={selectedId} />}
       </Main>
     </>
   );
@@ -57,10 +64,5 @@ function App() {
 
 export default App;
 function Main({ children }) {
-  return (
-    <div className="main">
-      {children}
-      
-    </div>
-  );
+  return <div className="main">{children}</div>;
 }
