@@ -3,6 +3,7 @@ import React, { useState ,useEffect } from 'react'
 
 function CharacterDetail({selectedId}) {
   const [selectedCharacter,setSelectedChar]=useState([]);
+  const [episodes,setEpisodes] = useState([]);
   useEffect(()=>{
    async function fetchData() {
     const {data} = await axios
@@ -10,6 +11,9 @@ function CharacterDetail({selectedId}) {
     if(selectedId){
       setSelectedChar(data);
     } 
+    const episodesId = data.episode.map(e => e.split('/').at(-1));
+     axios.get(`https://rickandmortyapi.com/api/episode/${episodesId}`)
+     .then(({data}) => setEpisodes(data));   
     }
     fetchData();
   },[selectedId]);
@@ -29,7 +33,7 @@ function CharacterDetail({selectedId}) {
         <p>{selectedCharacter.status} - {selectedCharacter.species}</p>
       </div>
     </div>
-    <EpisodeList episodes={selectedCharacter.episode}/>
+    <EpisodeList episodes={episodes}/>
   </div>
   )
 }
@@ -37,7 +41,7 @@ function CharacterDetail({selectedId}) {
 export default CharacterDetail
 
 function EpisodeList({episodes}) {
-  
+  console.log(episodes);
   return(
     <div className='text-white'>Episodes List</div>
   )

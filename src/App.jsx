@@ -38,6 +38,7 @@ function App() {
   return (
     <>
       <Toaster />
+      <h2 className="text-white text-3xl bg-pink-500">this is text</h2>
       <NavBar searchRes={character.length}>
         <Search
           value={query}

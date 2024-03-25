@@ -17,7 +17,6 @@ function CharacterList({ character, fetchHandler, selectedCharacterId }) {
 
 export default CharacterList;
 function Character({ item, fetchHandler, selectedCharacterId }) {
-  console.log('selectedCharacterId',selectedCharacterId);
   return (
     <div className="character-card">
       <div style={{ display: "flex" }}>
