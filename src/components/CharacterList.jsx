@@ -2,7 +2,7 @@ import React from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 function CharacterList({ character, fetchHandler, selectedCharacterId }) {
   return (
-    <div className="character-list">
+    <div className="basis-1/4">
       {character.map((item) => (
         <Character
           selectedCharacterId={selectedCharacterId}
@@ -18,7 +18,7 @@ function CharacterList({ character, fetchHandler, selectedCharacterId }) {
 export default CharacterList;
 function Character({ item, fetchHandler, selectedCharacterId }) {
   return (
-    <div className="character-card">
+    <div className="bg-slate-700 flex justify-between flex-row my-3 p-2 rounded-lg">
       <div style={{ display: "flex" }}>
         <img width={"50px"} height={"50px"} src={item.image} alt={item.name} />
         <div className="character-info">

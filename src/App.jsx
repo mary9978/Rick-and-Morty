@@ -36,9 +36,8 @@ function App() {
     setSelectedId((prevId) => prevId === id ? null : id);
   };
   return (
-    <>
+    <div className="container mx-auto overflow-x-hidden">
       <Toaster />
-      <h2 className="text-white text-3xl bg-pink-500">this is text</h2>
       <NavBar searchRes={character.length}>
         <Search
           value={query}
@@ -49,7 +48,7 @@ function App() {
       </NavBar>
       <Main>
         { !query.length ? (
-          <h3 style={{ color: "white" }}>search character list</h3>
+          <h3 className="text-white font-bold text-2xl">search character list</h3>
         ) : (
           <CharacterList
             selectedCharacterId = {selectedId}
@@ -59,11 +58,11 @@ function App() {
         )}
        {selectedId &&  <CharacterDetail selectedId={selectedId} />}
       </Main>
-    </>
+    </div>
   );
 }
 
 export default App;
 function Main({ children }) {
-  return <div className="main">{children}</div>;
+  return <div className="flex flex-row justify-between gap-2 m-3">{children}</div>;
 }

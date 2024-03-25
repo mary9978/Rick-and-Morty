@@ -3,13 +3,12 @@
 @tailwind utilities;
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-
 }
 
 body {
   width: 100vw;
   min-height: 100vh;
-  background-color: var(--slate-900);
+  background-color: #0f172a;
 }
 button {
   background-color: transparent;

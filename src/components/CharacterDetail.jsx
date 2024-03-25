@@ -17,20 +17,27 @@ function CharacterDetail({selectedId}) {
     }
     fetchData();
   },[selectedId]);
-
   if(!selectedCharacter) return <h2 className='text-white'>Select Character</h2>
   return (
-    <div className="character-card">
-    <div style={{'display':'flex'}}>
+    <div className="basis-2/4 character-card">
+    <div className='flex bg-slate-800 rounded-lg'>
       <img
-        width={"50px"}
-        height={"50px"}
+        className='w-48 h-48 rounded-l-lg'
         src={selectedCharacter.image}
         alt={selectedCharacter.name}
       />
-      <div className="character-info">
-        <p>{selectedCharacter.name}</p>
-        <p>{selectedCharacter.status} - {selectedCharacter.species}</p>
+      <div className="character-info p-4">
+        <p className='text-2xl text-slate-400 font-bold ms-1'>{selectedCharacter.name}</p>
+        <div className='flex items-center gap-2'>
+        {selectedCharacter.status === 'Alive'?<div className='w-2 h-2 rounded-full bg-green-500'></div>:<div className='w-2 h-2 rounded-full bg-red-700'></div>}
+        
+        <span className='text-slate-300 text-base font-bold'>{selectedCharacter.status} - {selectedCharacter.species}</span>
+        </div>
+        <p className='text-lg text-slate-700'>Last known Location :</p>
+        <p className='text-xl text-slate-400 font-bold'>{selectedCharacter?.location?.name}</p>
+        <button
+        className='mt-3 text-white rounded-2xl bg-slate-500 p-2'
+        >Add to favorite</button>
       </div>
     </div>
     <EpisodeList episodes={episodes}/>
@@ -41,7 +48,6 @@ function CharacterDetail({selectedId}) {
 export default CharacterDetail
 
 function EpisodeList({episodes}) {
-  console.log(episodes);
   return(
     <div className='text-white'>Episodes List</div>
   )
