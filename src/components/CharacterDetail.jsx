@@ -49,6 +49,22 @@ export default CharacterDetail
 
 function EpisodeList({episodes}) {
   return(
-    <div className='text-white'>Episodes List</div>
+    <div className='flex p-4 flex-col bg-slate-800 rounded-lg mt-4'>
+      <p className='text-2xl text-slate-400 font-bold'>List of Episodes : </p>
+      {episodes.map((ep,index) =>{
+        return(
+          <div key={ep.id} className='my-2 flex justify-between items-center'>
+            <div className='flex gap-2 text-base text-slate-200'>
+              <span>{String(index+1).padStart(2,'0')} - </span>
+              <p>{ep.episode} : </p>
+              <p>{ep.name.substring(0,20)+'...'}</p>
+            </div>
+            <div className='bg-slate-400 rounded-lg px-2 py-1'>
+              {ep.air_date}
+            </div>
+          </div>
+        )
+      })}
+    </div>
   )
 }
