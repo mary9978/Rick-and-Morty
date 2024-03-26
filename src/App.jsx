@@ -7,16 +7,19 @@ import NavBar, { Search } from "./components/NavBar.jsx";
 import toast, { Toaster } from "react-hot-toast";
 function App() {
   const [character, setCharacter] = useState([]);
+  const [favorite, setFavorite] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [query, setQuery] = useState("");
+  const isAddedToFacorite = favorite.map((fav) => fav.id).includes(selectedId);
+
   useEffect(() => {
     setIsFetching(true);
     axios
       .get(`https://rickandmortyapi.com/api/character?name=${query}`)
       .then(({ data }) => {
-        if(!query) setCharacter([]);
-        else{
+        if (!query) setCharacter([]);
+        else {
           setCharacter(data.results);
         }
       })
@@ -33,12 +36,16 @@ function App() {
   }, [query]);
 
   const selectedCharacter = (id) => {
-    setSelectedId((prevId) => prevId === id ? null : id);
+    setSelectedId((prevId) => (prevId === id ? null : id));
+  };
+  const addToFavorite = (favoriteItem) => {
+    toast.success("your character added successfully");
+    setFavorite([...favorite, favoriteItem]);
   };
   return (
-    <div className="container mx-auto overflow-x-hidden">
+    <div className="container mx-auto overflow-hidden">
       <Toaster />
-      <NavBar searchRes={character.length}>
+      <NavBar favorite={favorite} searchRes={character.length}>
         <Search
           value={query}
           onSearch={(e) => setQuery(e.target.value)}
@@ -47,16 +54,24 @@ function App() {
         />
       </NavBar>
       <Main>
-        { !query.length ? (
-          <h3 className="text-white font-bold text-2xl">search character list</h3>
+        {!query.length ? (
+          <h3 className="text-white font-bold text-2xl">
+            search character list
+          </h3>
         ) : (
           <CharacterList
-            selectedCharacterId = {selectedId}
+            selectedCharacterId={selectedId}
             fetchHandler={selectedCharacter}
             character={character}
           />
         )}
-       {selectedId &&  <CharacterDetail selectedId={selectedId} />}
+        {selectedId && (
+          <CharacterDetail
+            isAddedToFacorite={isAddedToFacorite}
+            onAddToFavorite={addToFavorite}
+            selectedId={selectedId}
+          />
+        )}
       </Main>
     </div>
   );
@@ -64,5 +79,7 @@ function App() {
 
 export default App;
 function Main({ children }) {
-  return <div className="flex flex-row justify-between gap-2 m-3">{children}</div>;
+  return (
+    <div className="flex flex-row justify-between gap-2 m-3">{children}</div>
+  );
 }
