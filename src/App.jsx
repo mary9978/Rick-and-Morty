@@ -5,12 +5,14 @@ import CharacterList from "./components/CharacterList.jsx";
 import axios from "axios";
 import NavBar, { Search } from "./components/NavBar.jsx";
 import toast, { Toaster } from "react-hot-toast";
+import Modal from "./components/Modal.jsx";
 function App() {
   const [character, setCharacter] = useState([]);
   const [favorite, setFavorite] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [query, setQuery] = useState("");
+  const [isOpenModal,setIsOpenModal] = useState(false)
   const isAddedToFacorite = favorite.map((fav) => fav.id).includes(selectedId);
 
   useEffect(() => {
@@ -42,16 +44,21 @@ function App() {
     toast.success("your character added successfully");
     setFavorite([...favorite, favoriteItem]);
   };
+  const onRemoveFavorite =(id)=>{
+    const filteredItem = favorite.filter(item => item.id !== id);
+    setFavorite(filteredItem);
+  }
   return (
     <div className="container mx-auto overflow-hidden">
       <Toaster />
-      <NavBar favorite={favorite} searchRes={character.length}>
+      <NavBar onOpenModal={()=>setIsOpenModal(true)} favorite={favorite} searchRes={character.length}>
         <Search
           value={query}
           onSearch={(e) => setQuery(e.target.value)}
           type={"text"}
           text={"search ..."}
         />
+       { isOpenModal && favorite.length!==0  && <Modal onRemoveFavorite={onRemoveFavorite} favoriteItem={favorite} onClose={()=>setIsOpenModal(false)}/>}
       </NavBar>
       <Main>
         {!query.length ? (
