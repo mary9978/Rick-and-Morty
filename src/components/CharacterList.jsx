@@ -2,7 +2,7 @@ import React from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 function CharacterList({ character, fetchHandler, selectedCharacterId }) {
   return (
-    <div className="basis-1/4">
+    <div className="basis-2/4">
       {character.map((item) => (
         <Character
           selectedCharacterId={selectedCharacterId}
@@ -18,26 +18,38 @@ function CharacterList({ character, fetchHandler, selectedCharacterId }) {
 export default CharacterList;
 function Character({ item, fetchHandler, selectedCharacterId }) {
   return (
-    <div className="bg-slate-700 flex justify-between flex-row my-3 p-2 rounded-lg">
-      <div style={{ display: "flex" }}>
-        <img width={"50px"} height={"50px"} src={item.image} alt={item.name} />
+    <div className="character-card">
+      <div className="flex gap-x-2 items-center">
+        <img
+          className="w-16 h-16 rounded-xl"
+          src={item.image}
+          alt={item.name}
+        />
         <div className="character-info">
-          <p>{item.name}</p>
-          <p>
-            {item.status} - {item.species}
+          <p className="text-slate-200 font-Nunito font-bold text-xl">
+            {item.gender == "Male" ? "👱🏻‍♂️ " : "👩🏻‍🦳 "}
+            {item.name}
           </p>
+          <div className="flex gap-x-2 items-center">
+            {item.status === "Alive" ? (
+              <div className="status"></div>
+            ) : (
+              <div className="status bg-red-700"></div>
+            )}
+            <p className="font-Nunito text-lg font-semiBold text-slate-200">
+              {item.status} - {item.species}
+            </p>
+          </div>
         </div>
       </div>
       {selectedCharacterId == item.id ? (
-        <EyeSlashIcon 
-          color="red"
-          width={"25px"}
+        <EyeSlashIcon
+          className="icon text-red-500"
           onClick={() => fetchHandler(item.id)}
         />
       ) : (
         <EyeIcon
-          color="red"
-          width={"25px"}
+          className="icon text-red-500"
           onClick={() => fetchHandler(item.id)}
         />
       )}

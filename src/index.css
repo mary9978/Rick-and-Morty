@@ -1,20 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+@layer components {
+  .display {
+    @apply flex items-center;
+  }
+  .nav-style{
+    @apply flex flex-wrap items-center justify-between bg-slate-700  rounded-lg h-16 px-2 ;
+  }
+  .search-input{
+    @apply rounded-md p-2 bg-slate-500 text-white;
+  }
+  .icon{
+    @apply w-8 h-8 text-red-600 hover:cursor-pointer hover:ease-in-out duration-100;
+  }
+  .badge-style{
+    @apply display justify-center rounded-lg p-0.5 w-4 h-4 bg-red-500 absolute right-0 bottom-4;
+  }
+  .character-card{
+    @apply bg-slate-800 hover:cursor-pointer hover:bg-slate-700 flex justify-between items-center flex-row my-3 p-4 rounded-lg h-24;
+  }
+  .status{
+    @apply w-2 h-2 rounded-full bg-green-500;
+  }
+  .btn-addFav{
+    @apply mt-3 text-white rounded-2xl bg-slate-500 p-2;
+  }
+  .episode-container{
+    @apply flex p-4 flex-col bg-slate-800 rounded-lg mt-4;
+  }
 }
 
 body {
-  width: 100vw;
-  min-height: 100vh;
   background-color: #0f172a;
+  overflow-x: hidden;
 }
-button {
-  background-color: transparent;
-  cursor: pointer;
-}
-
 * {
   padding: 0;
   margin: 0;
@@ -52,17 +74,9 @@ button {
   font-weight: 700;
 }
 
-.badge {
-  white-space: nowrap;
-  padding: 0.3rem 1rem;
-  border-radius: 1rem;
-  font-size: 0.8rem;
-  font-weight: 700;
-}
 
-.badge--secondary {
-  background-color: var(--slate-600);
-}
+
+
 
 .modal {
   width: 98%;
@@ -84,11 +98,6 @@ button {
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--slate-600);
-}
-
-.icon {
-  width: 1.6rem;
-  height: 1.6rem;
 }
 
 .modal__header .close {

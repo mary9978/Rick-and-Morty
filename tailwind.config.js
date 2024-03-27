@@ -13,7 +13,7 @@ export default {
            200:"#e2e8f0",
            300:"#cbd5e1",
            400:"#94a3b8",
-          //  500:rgb(100, 116, 139),
+            500:"#64748B",
            600:"#475569",
            700:"#334155",
            800:"#1e293b",
@@ -23,6 +23,9 @@ export default {
           500:'f43f5e',
           600:'e11d48'
         }
+      },
+      fontFamily:{
+        'Nunito':['Nunito','Helvetica, Arial, sans-serif']
       }
     }
     

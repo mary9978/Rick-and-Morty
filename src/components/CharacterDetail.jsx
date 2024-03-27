@@ -26,22 +26,22 @@ function CharacterDetail({ selectedId, onAddToFavorite, isAddedToFacorite }) {
   if (!selectedCharacter)
     return <h2 className="text-white">Select Character</h2>;
   return (
-    <div className="basis-2/4 character-card">
+    <div className="basis-2/4  mt-3">
       <div className="flex bg-slate-800 rounded-lg">
         <img
-          className="w-48 h-48 rounded-l-lg"
+          className="w-48 rounded-l-lg"
           src={selectedCharacter.image}
           alt={selectedCharacter.name}
         />
         <div className="character-info p-4">
           <p className="text-2xl text-slate-400 font-bold ms-1">
-            {selectedCharacter.name}
+          {selectedCharacter.gender == 'Male' ? '👱🏻‍♂️' : '👩🏻‍🦳'} {selectedCharacter.name}
           </p>
-          <div className="flex items-center gap-2">
+          <div className="display gap-2">
             {selectedCharacter.status === "Alive" ? (
-              <div className="w-2 h-2 rounded-full bg-green-500"></div>
+              <div className="status"></div>
             ) : (
-              <div className="w-2 h-2 rounded-full bg-red-700"></div>
+              <div className="status bg-red-700"></div>
             )}
 
             <span className="text-slate-300 text-base font-bold">
@@ -53,18 +53,18 @@ function CharacterDetail({ selectedId, onAddToFavorite, isAddedToFacorite }) {
             {selectedCharacter?.location?.name}
           </p>
           {isAddedToFacorite ? (
-            <p>item added to favorite</p>
+            <p className="mt-2 text-slate-400 font-Nunito">item added to favorite  ✅</p>
           ) : (
             <button
               onClick={() => onAddToFavorite(selectedCharacter)}
-              className="mt-3 text-white rounded-2xl bg-slate-500 p-2"
+              className="btn-addFav"
             >
               Add to favorite
             </button>
           )}
         </div>
       </div>
-      {!episodes ? <FallingLines /> : <EpisodeList episodes={episodes} />}
+      {!episodes ? <FallingLines /> : <EpisodeList episodes={episodes.slice(0,5)} />}
     </div>
   );
 }
@@ -86,12 +86,12 @@ function EpisodeList({ episodes }) {
     );
   }
   return (
-    <div className="flex p-4 flex-col bg-slate-800 rounded-lg mt-4">
-      <div className="flex justify-between items-center">
+    <div className="episode-container">
+      <div className="display justify-between">
         <p className="text-2xl text-slate-400 font-bold">List of Episodes : </p>
         <ArrowUpCircleIcon
           onClick={()=> setSortBy(is => !is)}
-          className="w-6 h-6 text-slate-400 me-2 hover:cursor-pointer hover:ease-in hover:duration-150"
+          className="icon w-6 h-6 text-slate-400 me-2"
           style={{rotate:sortBy ? '0deg':'180deg'}}
         />
       </div>
