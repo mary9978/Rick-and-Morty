@@ -3,26 +3,26 @@ import CharacterDetail from "./components/CharacterDetail.jsx";
 import "./style.css";
 import CharacterList from "./components/CharacterList.jsx";
 import axios from "axios";
-import NavBar, { FavoriteCharacter, Search, SearchResults } from "./components/NavBar.jsx";
+import NavBar, {
+  FavoriteCharacter,
+  Search,
+  SearchResults,
+} from "./components/NavBar.jsx";
 import toast, { Toaster } from "react-hot-toast";
 import Modal from "./components/Modal.jsx";
 function App() {
   const [character, setCharacter] = useState([]);
-  const [favorite, setFavorite] = useState([]);
+  const [favorite, setFavorite] = useState(()=> JSON.parse(localStorage.getItem('favourite')) || []);
   const [isFetching, setIsFetching] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [query, setQuery] = useState("");
   const isAddedToFacorite = favorite.map((fav) => fav.id).includes(selectedId);
-
   useEffect(() => {
     setIsFetching(true);
     axios
-      .get(`https://rickandmortyapi.com/api/character?name=${query}`)
+      .get(`${!query.length ? 'https://rickandmortyapi.com/api/character' :`https://rickandmortyapi.com/api/character?name=${query}`}`)
       .then(({ data }) => {
-        if (!query) setCharacter([]);
-        else {
           setCharacter(data.results);
-        }
       })
       .catch((err) => {
         if (query) {
@@ -35,7 +35,10 @@ function App() {
       })
       .finally(() => setIsFetching(false));
   }, [query]);
-
+  useEffect(() => {
+    localStorage.setItem('favourite',JSON.stringify(favorite));
+  }, [favorite])
+  
   const selectedCharacter = (id) => {
     setSelectedId((prevId) => (prevId === id ? null : id));
   };
@@ -43,15 +46,12 @@ function App() {
     toast.success("your character added successfully");
     setFavorite([...favorite, favoriteItem]);
   };
-  const onRemoveFavorite =(id)=>{
-    setFavorite(favorite.filter(item => item.id !== id));
-  }
+  const onRemoveFavorite = (id) => {
+    setFavorite(favorite.filter((item) => item.id !== id));
+  };
   return (
     <div className="container mx-auto overflow-hidden">
       <Toaster />
-
-
-
       <NavBar>
         <Search
           value={query}
@@ -61,27 +61,16 @@ function App() {
         />
         <SearchResults numOfChar={character.length} />
         <FavoriteCharacter
-        onRemoveFavorite={onRemoveFavorite}
-         favorite={favorite}
-         />
-       
+          onRemoveFavorite={onRemoveFavorite}
+          favorite={favorite}
+        />
       </NavBar>
-
-
-
-
       <Main>
-        {!query.length ? (
-          <h3 className="text-white font-bold text-2xl">
-            search character list
-          </h3>
-        ) : (
           <CharacterList
             selectedCharacterId={selectedId}
             fetchHandler={selectedCharacter}
-            character={character}
+            character={character.slice(0,5)}
           />
-        )}
         {selectedId && (
           <CharacterDetail
             isAddedToFacorite={isAddedToFacorite}
@@ -97,6 +86,6 @@ function App() {
 export default App;
 function Main({ children }) {
   return (
-    <div className="flex flex-row justify-between gap-2 m-3">{children}</div>
+    <div className="flex items-start gap-8 m-3">{children}</div>
   );
 }
