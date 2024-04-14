@@ -36,19 +36,20 @@ export function FavoriteCharacter({...props}) {
   return (
     <div className="relative">
       <HeartIcon
-        onClick={() => setIsOpenModal(true)}
+        onClick={() =>props.favorite.length !== 0 && setIsOpenModal(true)}
         className="icon"
       />
       <div className="badge-style">
         <span className="text-white text-xs">{props.favorite.length}</span>
       </div>
-      {isOpenModal && props.favorite.length !== 0 && (
+  
         <Modal
+          isOpenModal={isOpenModal}
           onRemoveFavorite={props.onRemoveFavorite}
           favoriteItem={props.favorite}
           onClose={() => setIsOpenModal(false)}
         />
-      )}
+ 
     </div>
   );
 }
