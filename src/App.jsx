@@ -2,42 +2,20 @@ import { useState, useEffect } from "react";
 import CharacterDetail from "./components/CharacterDetail.jsx";
 import "./style.css";
 import CharacterList from "./components/CharacterList.jsx";
-import axios from "axios";
 import NavBar, {
   FavoriteCharacter,
   Search,
   SearchResults,
 } from "./components/NavBar.jsx";
 import toast, { Toaster } from "react-hot-toast";
-import Modal from "./components/Modal.jsx";
+import useCharacter from "./hooks/useCharacter.js";
+import useLocalStorage from "./hooks/useLocalStorage.js";
 function App() {
-  const [character, setCharacter] = useState([]);
-  const [favorite, setFavorite] = useState(()=> JSON.parse(localStorage.getItem('favourite')) || []);
-  const [isFetching, setIsFetching] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
+  const [ favorite,setFavorite] = useLocalStorage('favorite',[]);
   const [query, setQuery] = useState("");
   const isAddedToFacorite = favorite.map((fav) => fav.id).includes(selectedId);
-  useEffect(() => {
-    setIsFetching(true);
-    axios
-      .get(`${!query.length ? 'https://rickandmortyapi.com/api/character' :`https://rickandmortyapi.com/api/character?name=${query}`}`)
-      .then(({ data }) => {
-          setCharacter(data.results);
-      })
-      .catch((err) => {
-        if (query) {
-          setCharacter([]);
-          toast.error("character not found");
-          return;
-        } else {
-          toast.error(err.message);
-        }
-      })
-      .finally(() => setIsFetching(false));
-  }, [query]);
-  useEffect(() => {
-    localStorage.setItem('favourite',JSON.stringify(favorite));
-  }, [favorite])
+  const {character,isFetching}  = useCharacter({query});
   
   const selectedCharacter = (id) => {
     setSelectedId((prevId) => (prevId === id ? null : id));
